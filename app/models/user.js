@@ -16,11 +16,21 @@ User.init({
     },
     nickname:Sequelize.STRING,
     password:Sequelize.STRING,
-    email:Sequelize.STRING,
+    email:{
+        type:Sequelize.STRING(64),
+        //独一无二的
+        unique:true
+    },
     openid:{
         type:Sequelize.STRING(64),
         unique:true
-    }
+    },
+    //添加字段名先删除原表再添加
+    test:Sequelize.STRING
 },{
     sequelize:sequelize
 })
+
+module.exports ={
+    User
+}

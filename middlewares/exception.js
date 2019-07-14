@@ -3,10 +3,14 @@ const catchError = async (ctx,next)=>{
     try {
         await next()
     } catch (error) {
-        if(global.config.env === 'dev'){
-            throw error
+
+        //开发环境  不是HttpException
+        const isHttpException = error instanceof HttpException
+        const isDev =global.config.env === 'dev'
+         
+        if(isDev && !isHttpException){
+            throw Error
         }
-        
         //error 堆栈调用信息
         // 简化清晰明了的信息
         //HTTP Status code 2xx 4xx 5xx

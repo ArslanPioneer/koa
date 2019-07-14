@@ -14,10 +14,10 @@ router.post('/v1/:id/classic/path', (ctx, next) => {
     // throw new Error('error')
 });
 //获取query 也就是?后面的参数
-router.get('/v1/classic/query', (ctx, next) => {
+router.get('/v1/classic/query', async(ctx, next) => {
   
    const query =ctx.request.query
-   const v = new PositiveIntegerValidator() 
+   const v = await new PositiveIntegerValidator() 
    v.validate(ctx)
    //validator获取参数
    v.get('query.id')
