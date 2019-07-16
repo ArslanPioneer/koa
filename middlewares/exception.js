@@ -3,7 +3,7 @@ const catchError = async (ctx,next)=>{
     try {
         await next()
     } catch (error) {
-
+        console.log(error)
         //开发环境  不是HttpException
         const isHttpException = error instanceof HttpException
         const isDev =global.config.env === 'dev'

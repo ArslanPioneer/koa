@@ -32,6 +32,7 @@ class InitManager {
     //初始化全局异常
     static initException(){
         const error =require('../core/http-exception')
+        //放在全局变量中
         global.errs =error
     }
 }
