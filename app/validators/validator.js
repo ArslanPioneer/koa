@@ -68,7 +68,7 @@ class TokenValidator extends LinValidator {
             //微信小程序 account
             // tel
             new Rule('isOptional'),
-            new Rule('isLength',{
+            new Rule('isLength','至少6个字符',{
                 min:6,
                 max:128
             })

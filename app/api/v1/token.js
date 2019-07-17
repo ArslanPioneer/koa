@@ -10,18 +10,18 @@ router.post('/',async(ctx)=>{
     
     const v =await new TokenValidator().validate(ctx)
     console.log(v)
-    let type =v.get('body.type')
-    let secret =v.get('body.secret')
-    let account =v.get('body.account')
-    switch (type) {
+   
+    switch (v.get('body.type')) {
         case LoginType.USER_EMAIL:
-            await emailLogin(account,secret)
+            await emailLogin(v.get('body.account'),v.get('body.secret'))
             break;
         case LoginType.USER_MINI_PROGRAM:
             break;
         default:
             break;
     }
+
+    throw new global.errs.Success('成功')
 })
 
 async function emailLogin (account,secret){
