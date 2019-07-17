@@ -2,6 +2,7 @@ const Router =require('koa-router')
 const router = new Router()
 const {HttpException,ParameterException} =require('../../../core/http-exception')
 const {PositiveIntegerValidator} =require('../../validators/validator')
+const {Auth} =require('../../../middlewares/auth')
 //校验防止非法参数
 //获取路径里的参数也就是:id
 router.post('/v1/:id/classic/path', (ctx, next) => {
@@ -48,5 +49,16 @@ router.post('/v1/classic/post', (ctx, next) => {
     ctx.body ={
         key:'classic'
     }
+ });
+
+ router.get('/v1/classic/latest',new Auth().m, (ctx, next) => {
+    ctx.body={
+        
+    }
+    // const body =ctx.request.body
+    // console.log(body)
+    // ctx.body ={
+    //     key:'classic'
+    // }
  });
 module.exports = router

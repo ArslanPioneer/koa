@@ -58,7 +58,7 @@ module.exports = {
     generateToken,
 }
 
-
+ 
 
 // const generateToken = function (uid, scope) {
 //     const secretKey = global.config.security.secretKey
