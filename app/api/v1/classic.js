@@ -52,13 +52,12 @@ router.post('/v1/classic/post', (ctx, next) => {
  });
 
  router.get('/v1/classic/latest',new Auth().m, (ctx, next) => {
-    ctx.body={
-        
-    }
-    // const body =ctx.request.body
-    // console.log(body)
-    // ctx.body ={
-    //     key:'classic'
-    // }
+
+    ctx.body =ctx.auth.uid
+    //权限 复杂
+    //限制 token 角色
+    //普通用户 管理员
+    //
+     
  });
 module.exports = router
