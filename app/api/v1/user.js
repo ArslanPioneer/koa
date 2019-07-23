@@ -2,6 +2,7 @@ const bcrypt =require('bcryptjs')
 const Router =require('koa-router')
 const {RegisterValidator} =require('../../validators/validator')
 const {User} =require('../../models/user')
+
 const router =new Router({
     prefix:'/v1/user'
 })
