@@ -17,7 +17,7 @@ class WXmanager {
             throw new global.errs.AuthFailed('openid获取失败')
         }
 
-        if(result.data.errcod){
+        if(result.data.errcode){
             throw new global.errs.AuthFailed('openid获取失败'+result.data.errmsg)
         }
 
