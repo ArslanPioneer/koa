@@ -27,6 +27,19 @@ router.post('/register',async(ctx)=>{
     User.create(user)
     //
     throw new global.errs.Success('用户注册成功')
+
+    //主题从粗到细
+    //user
+    //期刊粗
+    //movie setence music
+    //url update title
+    //一期一期 model表 1期2期3期
+    //实体表 记录本身相关信息\事物\表
+    //Flow 具体实体,抽象，记录业务
+
+    //实体表 实体
+    //来设计 所有业务
+
 })  
 
  module.exports =router
