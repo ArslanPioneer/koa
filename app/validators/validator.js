@@ -113,10 +113,18 @@ class LikeValidator extends PositiveIntegerValidator{
         this.validateType = checkArtType  
     }
 }
+
+class DisLikeValidator extends PositiveIntegerValidator{
+    constructor(){
+        super()
+        this.validateType = checkArtType  
+    }
+}
 module.exports ={
     PositiveIntegerValidator,
     RegisterValidator,
     TokenValidator,
     NotEmptyValidator,
-    LikeValidator
+    LikeValidator,
+    DisLikeValidator
 }

@@ -5,6 +5,7 @@ const {PositiveIntegerValidator} =require('../../validators/validator')
 const {Auth} =require('../../../middlewares/auth')
 const {Flow} =require('../../models/flow')
 const {Art} =require('../../models/art')
+const {Favor} =require('../../models/favor')
 //校验防止非法参数
 //获取路径里的参数也就是:id
 router.post('/v1/:id/classic/path', (ctx, next) => {
@@ -59,8 +60,10 @@ router.post('/v1/classic/post', (ctx, next) => {
         order:[['index','DESC']]
     })
     const art=await Art.getData(flow.art_id,flow.type)
+    const likeStatus =await Favor.userLikeIt(ctx.auth.uid,flow.type,flow.art_id)
     //js 序列化
     art.setDataValue('index',flow.index)
+    art.setDataValue('like_status',likeStatus)
     ctx.body =art
     //ctx.body =flow
     //权限 复杂

@@ -35,7 +35,40 @@ class Favor extends Model {
     }
 
     static async disLike(uid,type,art_id){
+          const favor =await Favor.findOne({
+            where:{
+              art_id,
+              type,
+              uid
+            }
+          })
 
+          if(!favor){
+            throw new global.errs.DisLikeError()
+          }
+
+          return sequelize.transaction(async t=>{
+              //找到那条数据硬删除
+              await favor.destroy({
+                force:true,
+                transaction:t
+              } )
+
+              const art =await Art.getData(art_id,type)
+              await art.decrement('fav_nums',{by:1,transaction:t})
+          })
+    }
+
+    static async userLikeIt(uid,type,art_id){
+       const favor =Favor.findOne({
+         where:{
+           uid,
+           type,
+           art_id
+         }
+       })
+
+       return favor?true:false
     }
 }
 
