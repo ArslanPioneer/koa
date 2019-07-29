@@ -1,8 +1,10 @@
+//别名注册
+require('module-alias/register')
 const Koa = require('koa')
 const InitManager =require('./core/init')
 const parser =require('koa-bodyparser')
 const catchError =require('./middlewares/exception')
-require('./app/models/user')
+//require('./app/models/user')
 const app = new Koa()
 //提供post请求的中间件注册
 app.use(parser())

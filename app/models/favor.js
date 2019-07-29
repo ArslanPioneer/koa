@@ -60,7 +60,7 @@ class Favor extends Model {
     }
 
     static async userLikeIt(uid,type,art_id){
-       const favor =Favor.findOne({
+       const favor =await Favor.findOne({
          where:{
            uid,
            type,
@@ -68,7 +68,7 @@ class Favor extends Model {
          }
        })
 
-       return favor?true:false
+       return favor ? true:false
     }
 }
 

@@ -1,11 +1,12 @@
 const Router =require('koa-router')
 const router = new Router()
 const {HttpException,ParameterException} =require('../../../core/http-exception')
-const {PositiveIntegerValidator} =require('../../validators/validator')
+const {PositiveIntegerValidator,ClassicValidator} =require('../../validators/validator')
 const {Auth} =require('../../../middlewares/auth')
 const {Flow} =require('../../models/flow')
 const {Art} =require('../../models/art')
-const {Favor} =require('../../models/favor')
+const {Favor} =require('@models/favor')
+
 //校验防止非法参数
 //获取路径里的参数也就是:id
 router.post('/v1/:id/classic/path', (ctx, next) => {
@@ -72,4 +73,67 @@ router.post('/v1/classic/post', (ctx, next) => {
     //序列化 对象json
      
  });
+//获取下一期期刊
+ router.get('/v1/classic/:index/next',new Auth().m,async (ctx,next) =>{
+    const v = await new PositiveIntegerValidator().validate(ctx,{
+        id:'index'
+    })
+    const index =v.get('path.index')
+    const flow =await Flow.findOne({
+        where:{
+            index:index+1
+        }
+    })
+
+    if(!flow){
+        throw new global.errs.NotFound()
+    }
+    //数据库操作异步的
+    const art =await Art.getData(flow.art_id,flow.type)
+    const likeStatus=await Favor.userLikeIt(ctx.auth.uid,flow.type,flow.art_id)
+    art.setDataValue('index',flow.index)
+    art.setDataValue('like_status',likeStatus)
+    ctx.body=art
+ })
+
+ //获取上一期期刊
+ router.get('/v1/classic/:index/previous',new Auth().m, async(ctx,next)=>{
+     const v =await new PositiveIntegerValidator().validate(ctx,{
+         id:'index'
+     })
+
+     const index =v.get('path.index')
+     const flow  =await Flow.findOne({
+         where:{
+             index:index-1
+         }
+     })
+
+     if(!flow){
+         throw new global.errs.NotFound()
+     }
+
+     const art =await Art.getData(flow.art_id,flow.type)
+     const likeStatus =await Favor.userLikeIt(ctx.auth.uid,flow.type,flow.art_id)
+     art.setDataValue('index',flow.index)
+     art.setDataValue('like_status',likeStatus)
+     ctx.body =art
+ })
+//获取期刊点赞信息
+ router.get('/v1/classic/:type/:id/favor',new Auth().m, async(ctx,next) =>{
+    const v =await new ClassicValidator().validate(ctx)
+    const id =v.get('path.id')
+
+    const type =parseInt(v.get('path.type'))
+    const art =await Art.getData(id,type)
+    if(!art){
+        throw new global.errs.NotFound()
+    }
+    const likeStatus = await Favor.userLikeIt(ctx.auth.uid,type,id)
+
+    ctx.body ={
+        fav_nums:art.fav_nums,
+        like_status:likeStatus
+    }
+ })
 module.exports = router

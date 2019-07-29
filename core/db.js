@@ -24,6 +24,7 @@ const sequelize = new Sequelize(dbName, user, password, {
         // 将自动设置所有属性的字段参数为下划线命名方式.
         // 不会覆盖已经定义的字段选项
         underscored: true,
+        
     }
 })
 //自动化注册模型
