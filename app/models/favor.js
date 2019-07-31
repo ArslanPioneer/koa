@@ -1,9 +1,9 @@
 const {sequelize} =require('../../core/db')
 
-const {Sequelize,Model} =require('sequelize')
+const {Sequelize,Model,Op} =require('sequelize')
 const {LikeError} =require('../../core/http-exception')
 const {Art} =require('../models/art')
-
+ 
 class Favor extends Model {
     //业务表
     static async like(uid,type,art_id){
@@ -69,6 +69,29 @@ class Favor extends Model {
        })
 
        return favor ? true:false
+    }
+
+    static async getMyclassicFavors(uid) {
+        const arts =await Favor.findAll({
+          where:{
+            uid,
+            type:{
+              [Op.not]:400
+            }
+          }
+        })
+
+        if(!arts) {
+           throw global.errs.NotFound()
+        }
+
+        let favors =[]
+
+        for(let art of arts){
+           art =await Art.getData(art.art_id,art.type)
+           favors.push(art)
+        }
+        return favors
     }
 }
 

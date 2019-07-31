@@ -125,15 +125,33 @@ router.post('/v1/classic/post', (ctx, next) => {
     const id =v.get('path.id')
 
     const type =parseInt(v.get('path.type'))
+    //类方法 静态方法
     const art =await Art.getData(id,type)
     if(!art){
         throw new global.errs.NotFound()
     }
+    
     const likeStatus = await Favor.userLikeIt(ctx.auth.uid,type,id)
 
     ctx.body ={
         fav_nums:art.fav_nums,
         like_status:likeStatus
     }
+ })
+
+ router.get('/v1/classic/:type/:id',new Auth().m,async(ctx,next)=>{
+        const v =await new ClassicValidator().validate(ctx)
+        const id = v.get('path.id')
+        const type =parseInt(v.get('path.type'))
+        
+        const artDetail = await new Art(id,type).getDetail(ctx.auth.uid)
+        artDetail.art.setDataValue('like_status',artDetail.like_status)
+        ctx.body = artDetail.art
+ })
+
+ router.get('/v1/classic/favor',new Auth().m ,async(ctx,next) =>{
+        const uid =ctx.auth.uid
+        const favors =await Favor.getMyclassicFavors(uid)
+        ctx.body = favors
  })
 module.exports = router
