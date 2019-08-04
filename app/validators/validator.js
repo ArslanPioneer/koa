@@ -124,6 +124,35 @@ class DisLikeValidator extends LikeValidator{
 class ClassicValidator extends LikeValidator{
      
 }
+
+class SearchValidator extends LinValidator {
+    constructor(){
+        super()
+        this.q =[
+            new Rule('isLength','搜索关键词不能为空',{min:1,max:16})
+        ]
+
+        this.start =[
+            new Rule('isInt','start不符合规范',{
+                min:0,
+                max:60000
+            }),
+            new Rule('isOptional','',0)
+        ],
+        this.count =[
+            new Rule(
+                'isInt',
+                'count不符合规范',
+                {
+                    min:1,
+                    max:5
+                }
+            )
+        ]
+    }
+}
+
+
 module.exports ={
     PositiveIntegerValidator,
     RegisterValidator,
@@ -131,5 +160,6 @@ module.exports ={
     NotEmptyValidator,
     LikeValidator,
     DisLikeValidator,
-    ClassicValidator
+    ClassicValidator,
+    SearchValidator
 }
