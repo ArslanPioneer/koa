@@ -7,6 +7,7 @@ const router = new Router(
 const {HotBook} =require('../../models/hotBook') 
 const {PositiveIntegerValidator,ClassicValidator,SearchValidator} =require('../../validators/validator')
 const {Book} =require('../../models/book')
+const {Auth} =require('../../../middlewares/auth')
 router.get('hotList', async (ctx,next)=>{
     const hotBook = await HotBook.getAll()
     ctx.body ={
@@ -28,4 +29,10 @@ router.get('search',async(ctx)=>{
     ctx.body =result
 })
 
+router.get('favor/count' ,new Auth().m,async (ctx) =>{
+    const count  =await Book.getBookFavorNums(ctx.auth.uid)
+    ctx.body ={
+        count:count
+    }
+})
 module.exports = router

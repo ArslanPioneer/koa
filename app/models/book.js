@@ -2,6 +2,7 @@ const {sequelize} =require('../../core/db')
 const {Sequelize,Model,Op} =require('sequelize')
 const util =require('util')
 const axios =require('axios')
+const {Favor} =require('../models/favor')
 class Book extends Model {
     constructor(id){
         super()
@@ -18,6 +19,17 @@ class Book extends Model {
         const url  = util.format(global.config.yushu.keywordUrl,encodeURI(q),count,start,summary)
         const result = await axios.get(url)
         return result.data
+    }
+
+    static async getBookFavorNums(uid){
+        const count =await Favor.count({
+            where:{
+                uid,
+                type:400
+            }
+        })
+
+        return count
     }
 }
 
