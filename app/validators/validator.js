@@ -153,6 +153,18 @@ class SearchValidator extends LinValidator {
 }
 
 
+class AddShortCommentValidator extends PositiveIntegerValidator {
+    constructor(){
+        super()
+        this.content =[
+            new Rule('isLength','必须在1到24个字符之间',{
+                min:1,
+                max:24
+            })
+        ]
+    }
+}
+
 module.exports ={
     PositiveIntegerValidator,
     RegisterValidator,
@@ -161,5 +173,6 @@ module.exports ={
     LikeValidator,
     DisLikeValidator,
     ClassicValidator,
-    SearchValidator
+    SearchValidator,
+    AddShortCommentValidator
 }
