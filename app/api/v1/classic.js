@@ -117,6 +117,7 @@ router.post('/v1/classic/post', (ctx, next) => {
      const likeStatus =await Favor.userLikeIt(ctx.auth.uid,flow.type,flow.art_id)
      art.setDataValue('index',flow.index)
      art.setDataValue('like_status',likeStatus)
+    //  art.exclude=['index','image','content']
      ctx.body =art
  })
 //获取期刊点赞信息
@@ -146,6 +147,7 @@ router.post('/v1/classic/post', (ctx, next) => {
         
         const artDetail = await new Art(id,type).getDetail(ctx.auth.uid)
         artDetail.art.setDataValue('like_status',artDetail.like_status)
+       
         ctx.body = artDetail.art
  })
 

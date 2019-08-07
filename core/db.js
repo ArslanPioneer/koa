@@ -1,5 +1,5 @@
 const {Sequelize,Model} =require('sequelize')
-const {unset} =require('lodash')
+const {unset,clone,isArray} =require('lodash')
 const {
     dbName,
     host,
@@ -29,11 +29,20 @@ const sequelize = new Sequelize(dbName, user, password, {
 })
 //自动化注册模型
 sequelize.sync()
+
 Model.prototype.toJSON =function(){
+    //浅拷贝
     let data = clone(this.dataValues)
     unset(data,'created_at')
     unset(data,'deleted_at')
     unset(data,'updated_at')
+
+    if(isArray(this.exclude)){
+        this.exclude.forEach(item => {
+            unset(data,item)
+        });
+    }
+
     return data
 }
 module.exports = {

@@ -62,6 +62,7 @@ router.get(':book_id/short_comment',new Auth().m,async ctx =>{
     })
 
     const comments=await Comment.getComment(v.get('path.book_id'))
+    
     ctx.body =comments
 })
 

@@ -42,6 +42,8 @@ class Comment extends Model {
     // }
 }
 
+
+
 Comment.init({
     content:Sequelize.STRING(12),
     nums:{
