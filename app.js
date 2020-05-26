@@ -4,9 +4,12 @@ const Koa = require("koa");
 const InitManager = require("./core/init");
 const parser = require("koa-bodyparser");
 const catchError = require("./middlewares/exception");
+//CORS跨域
+const cors = require("@koa/cors");
 //require('./app/models/user')
 const app = new Koa();
 //提供post请求的中间件注册
+app.use(cors());
 app.use(parser());
 app.use(catchError);
 
