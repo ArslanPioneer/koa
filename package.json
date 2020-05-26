@@ -1,7 +1,7 @@
 {
   "name": "island",
   "version": "1.0.0",
-  "description": "7七月的微信公众号：林间有风",
+  "description": "koa backend",
   "main": "app.js",
   "dependencies": {
     "axios": "^0.18.0",
@@ -36,9 +36,9 @@
   "author": "7yue",
   "license": "MIT",
   "devDependencies": {},
-  "_moduleAliases":{
-    "@root":".",
-    "@models":"app/models",
-    "@validator":"app/validators/validator.js"
+  "_moduleAliases": {
+    "@root": ".",
+    "@models": "app/models",
+    "@validator": "app/validators/validator.js"
   }
 }
