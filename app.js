@@ -20,5 +20,5 @@ InitManager.initCore(app);
 //开闭原则 修改关闭 增加扩展
 //api 版本号
 //路径 查询参数
-console.log("http://localhost:9000");
+
 app.listen(9000);
