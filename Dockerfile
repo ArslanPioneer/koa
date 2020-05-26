@@ -7,9 +7,8 @@ WORKDIR /app
 COPY package.json package-lock.json /app/ 
 RUN npm config set registry "https://registry.npm.taobao.org/" \
     && npm install
-RUN npm install pm2 -g
 
-CMD [ "pm2" ,"start app.js" ]
+CMD [ "npm" ,"run start:prod" ]
 
 #暴露容器80端口
 EXPOSE 8080
