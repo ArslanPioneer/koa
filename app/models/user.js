@@ -39,15 +39,11 @@ class User extends Model {
   }
 
   static async getUserList(page, size) {
-    return await User.findAndCount({
+    return await User.findAndCountAll({
       limit: size,
-      offset: page * size,
-      //   where: {
-      //     id,
-      //     nickname,
-      //     password,
-      //     email,
-      //   },
+      offset: size * (page - 1),
+      order: ["id", ["id", "desc"]],
+      attributes: ["id", "nickname", "email"],
     });
   }
 }
