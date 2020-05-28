@@ -56,14 +56,15 @@ router.post("/register", async (ctx) => {
   //来设计 所有业务
 });
 
-router.post("/userList", async (ctx) => {
+router.post("/getUserList", async (ctx) => {
   const v = await new getUserListValidator().validate(ctx);
-  const UserList = await User.verifyEmailPassword(
+  const UserListData = await User.getUserList(
     v.get("body.page"),
     v.get("body.size")
   );
   ctx.body = {
-    userList: UserList,
+    userList: UserListData.rows,
+    count: UserListData.count,
   };
 });
 
