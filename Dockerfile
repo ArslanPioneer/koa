@@ -10,7 +10,7 @@ RUN npm config set registry "https://registry.npm.taobao.org/" \
 COPY . /app/
 EXPOSE 9000
 
-CMD  ["node","app.js"]
+CMD  ["npm","run start:prod"]
 
 
 

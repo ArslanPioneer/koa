@@ -1,6 +1,10 @@
 const bcrypt = require("bcryptjs");
 const Router = require("koa-router");
-const { RegisterValidator } = require("../../validators/validator");
+const {
+  RegisterValidator,
+  LoginValidator,
+  getUserListValidator,
+} = require("../../validators/validator");
 const { User } = require("../../models/user");
 
 const router = new Router({
@@ -8,8 +12,15 @@ const router = new Router({
 });
 //登录
 router.post("/login", async (ctx) => {
-  console.log(ctx);
-  throw new global.errs.Success("登录成功");
+  const v = await new LoginValidator().validate(ctx);
+  const isUser = await User.verifyEmailPassword(
+    v.get("body.email"),
+    v.get("body.password")
+  );
+  if (isUser) {
+    throw new global.errs.Success("登录成功");
+  }
+  //throw new global.errs.Success("登录成功");
 });
 //注册，新增数据
 router.post("/register", async (ctx) => {
@@ -43,6 +54,17 @@ router.post("/register", async (ctx) => {
 
   //实体表 实体
   //来设计 所有业务
+});
+
+router.post("/userList", async (ctx) => {
+  const v = await new getUserListValidator().validate(ctx);
+  const UserList = await User.verifyEmailPassword(
+    v.get("body.page"),
+    v.get("body.size")
+  );
+  ctx.body = {
+    userList: UserList,
+  };
 });
 
 module.exports = router;

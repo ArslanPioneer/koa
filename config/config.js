@@ -1,12 +1,12 @@
 module.exports = {
   env: "dev",
-  database: {
-    dbName: "arslan",
-    host: "119.45.0.151",
-    port: 3306,
-    user: "root",
-    password: "123456",
-  },
+  // database: {
+  //   dbName: "arslan",
+  //   host: "119.45.0.151",
+  //   port: 3306,
+  //   user: "root",
+  //   password: "123456",
+  // },
   security: {
     //根密钥
     secretKey: "qwerdf",
